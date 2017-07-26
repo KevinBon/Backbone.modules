@@ -16,29 +16,33 @@
         useCaching: function useCaching(expired, opts) {
             return !expired;
         },
-        _isCacheTimeExpired: function _isCacheTimeExpired(url) {
-            if (!this.__cachedFor || !this.__cachedFor[url])
+        _isCacheTimeExpired: function _isCacheTimeExpired(hash) {
+            if (!this.__cachedFor || !this.__cachedFor[hash])
                 return true;
 
-            return (_.now() - this.__cachedFor[url]) > this.cacheExpiringTime;
+            return (_.now() - this.__cachedFor[hash]) > this.cacheExpiringTime;
         },
-        _registeredAsCached: function _registeredAsCached(url, data) {
+        _getCacheHash: function(url, data) {
+          return url + '__' + (data ? JSON.stringify(data) : '');
+        },
+        _registeredAsCached: function _registeredAsCached(hash) {
             if (!this.__cachedFor)
                 this.__cachedFor = {};
 
-            this.__cachedFor[url] = _.now();
+            this.__cachedFor[hash] = _.now();
             return this;
         },
         fetch: function fetch(opts) {
             opts = opts || {};
             var url = opts.url || _.result(this, 'url');
-            if (this.useCaching(this._isCacheTimeExpired(url), opts)) {
+            var hash = this._getCacheHash(url, opts.data);
+            if (this.useCaching(this._isCacheTimeExpired(hash), opts)) {
                 opts.success.call(opts.context || this, this, null, opts);
                 return this;
             }
             var self = this;
             opts.success = _.wrap(opts.success, function(originalFn, collec, resp, options) {
-                self._registeredAsCached(url);
+                self._registeredAsCached(hash);
                 originalFn.call(opts.context || collec, collec, resp, options);
             });
             return Backbone.Collection.prototype.fetch.apply(this, arguments);
