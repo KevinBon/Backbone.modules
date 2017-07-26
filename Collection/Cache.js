@@ -10,9 +10,10 @@
          * [useCaching description]
          * @method useCaching
          * @param  {Boolean}   expired [description]
+         * @param  {Object}   opts [description]
          * @return {Boolean}           [description]
          */
-        useCaching: function useCaching(expired) {
+        useCaching: function useCaching(expired, opts) {
             return !expired;
         },
         _isCacheTimeExpired: function _isCacheTimeExpired(url) {
@@ -21,7 +22,7 @@
 
             return (_.now() - this.__cachedFor[url]) > this.cacheExpiringTime;
         },
-        _registeredAsCached: function _registeredAsCached(url) {
+        _registeredAsCached: function _registeredAsCached(url, data) {
             if (!this.__cachedFor)
                 this.__cachedFor = {};
 
@@ -31,7 +32,7 @@
         fetch: function fetch(opts) {
             opts = opts || {};
             var url = opts.url || _.result(this, 'url');
-            if (this.useCaching(this._isCacheTimeExpired(url))) {
+            if (this.useCaching(this._isCacheTimeExpired(url), opts)) {
                 opts.success.call(opts.context || this, this, null, opts);
                 return this;
             }
