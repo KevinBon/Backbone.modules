@@ -5,7 +5,7 @@ Simple Backbone.Collection fetch only caching system.
 # How it's working?
 
 We decide to return the current data when:
-- The same url && options.data have been registered in the cache.
+- The same `url` && `options.data` have been registered in the cache.
 - The time elapsed between the last registered request and the fetch didn't exceed the `cacheExpiringTime` property (default: 60s)
 - The `useCaching` predicate return true.
 
