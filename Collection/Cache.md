@@ -12,7 +12,7 @@ We decide to return the current data when:
 # Example of implementation
 
 ```javascript
-Application.Collections.Test = Application.Collections.Basic.extend({
+Application.Collections.Test = Backbone.Collection.extend({
     url: 'dummyUrl',
     model: function (attrs, options) {
         return new Application.Models.Test(attrs, options);
