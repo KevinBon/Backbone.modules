@@ -20,7 +20,7 @@
             if (where) {
                 var foundIndex = -1;
                 for (var i = 0; i < index; i++)
-                    if (_.findWhere(this.collection.at(i), where)) {
+                    if (_.findWhere(this.collection.models[i], where)) {
                         foundIndex = i;
                         break;
                     }
@@ -49,7 +49,7 @@
             if (where) {
                 var foundIndex = -1;
                 for (var i = index + 1; i < this.collection.length; i++)
-                    if (_.findWhere(this.collection.at(i), where)) {
+                    if (_.findWhere(this.collection.models[i], where)) {
                         foundIndex = i;
                         break;
                     }
