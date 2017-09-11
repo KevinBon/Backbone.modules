@@ -2,7 +2,7 @@
     'use strict';
 
     Backbone.Abstract = Backbone.Abstract || {};
-    Backbone.Abstract.Model = Backbone.Abstract.Collection || {};
+    Backbone.Abstract.Model = Backbone.Abstract.Model || {};
     Backbone.Abstract.Model.Navigate = {
          /**
          * Find the previous model in the linked collection
