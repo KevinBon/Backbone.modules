@@ -1,2 +1,2 @@
 # Backbone.modules
-Some Backbone modules that can be useful
+Backbone modules that can be useful.
